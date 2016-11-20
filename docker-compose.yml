@@ -1,0 +1,29 @@
+version: '2'
+
+services:
+  proxy:
+    image: haproxy:alpine
+    volumes:
+     - ./haproxy:/usr/local/etc/haproxy:ro 
+    ports:
+     - "80:80"         
+    links:
+     - www
+     - blog
+    network_mode: bridge
+    restart: always
+  www:  
+    image: nginx:stable-alpine
+    volumes:
+     - ./nginx-www/0t2.me:/usr/share/nginx/html:ro
+     - ./nginx-www/nginx.conf:/etc/nginx/nginx.conf:ro
+     - ./nginx-www/default.conf:/etc/nginx/conf.d/default.conf
+    command: /bin/sh -c "nginx -g 'daemon off;'"
+    network_mode: bridge
+    restart: always
+  blog:
+    image: ghost:latest
+    volumes:
+     - ./ghost-blog:/var/lib/ghost
+    network_mode: bridge
+    restart: always

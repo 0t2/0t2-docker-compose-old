@@ -1,0 +1,4 @@
+[submodule "nginx-www/0t2.me"]
+	path = nginx-www/0t2.me
+	url = git@github.com:0t2/0t2.me.git
+	branch = gh-pages
